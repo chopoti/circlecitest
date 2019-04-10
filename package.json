@@ -1,0 +1,62 @@
+{
+    "name": "als-oracle-template",
+    "description": "",
+    "version": "1.0.0",
+    "author": "Valentin Genev <vgenev@gmail.com>",
+    "contributors": [],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/vgenev/als-oracle-template.git"
+    },
+    "config": {
+        "knex": "--knexfile ./config/knexfile.js"
+    },
+    "bugs": "http://github.com/vgenev/als-oracle-template/issues",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org"
+    },
+    "dependencies": {
+        "@mojaloop/central-services-database": "5.2.1",
+        "@mojaloop/central-services-shared": "4.1.0-snapshot",
+        "@mojaloop/forensic-logging-client": "0.5.1",
+        "boom": "7.1.1",
+        "dotenv": "7.0.0",
+        "hapi": "17.0.0",
+        "hapi-openapi": "1.2.1",
+        "joi": "14.3.1",
+        "knex": "0.16.3"
+    },
+    "devDependencies": {
+        "eslint": "5.6.1",
+        "faucet": "0.0.1",
+        "istanbul": "1.1.0-alpha.1",
+        "pre-commit": "1.2.2",
+        "proxyquire": "2.1.0",
+        "rewire": "4.0.1",
+        "sinon": "6.3.5",
+        "swagmock": "1.0.0",
+        "tap-xunit": "2.3.0",
+        "tape": "4.6.2",
+        "tapes": "4.1.0"
+    },
+    "scripts": {
+        "start": "node ./src/server",
+        "test": "tape 'test/**/*.js'",
+        "test:unit": "tape 'test/unit/**/*.js'",
+        "test:xunit": "tape 'test/unit/**/*.js' | tap-xunit",
+        "cover": "istanbul cover tape -- 'test/unit/**/*.js'",
+        "lint": "eslint .",
+        "test:coverage-check": "npm run test:coverage && istanbul check-coverage",
+        "test:coverage": "istanbul cover tape -- 'test/unit/**/*.js'",
+        "regenerate": "yo swaggerize:test --framework hapi --apiPath './src/interface/swagger.json'",
+        "migrate": "run-s migrate:latest seed:run",
+        "migrate:latest": "knex $npm_package_config_knex migrate:latest",
+        "migrate:create": "knex migrate:make $npm_package_config_knex",
+        "migrate:rollback": "knex migrate:rollback $npm_package_config_knex",
+        "migrate:current": "knex migrate:currentVersion $npm_package_config_knex",
+        "seed:run": "knex seed:run $npm_package_config_knex"
+    },
+    "generator-swaggerize": {
+        "version": "4.1.0"
+    }
+}
